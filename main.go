@@ -17,16 +17,16 @@ import (
 var dir = ""
 
 func loadArgs() {
-	fdir := flag.String("dir", "", "the static directory path")
 	flag.Parse()
+	dirArg := flag.Arg(0)
 
-	if *fdir == "" {
+	if dirArg == "" {
 		log.Fatal("error: static path not set")
 	}
-	if _, err := os.Stat(*fdir); os.IsNotExist(err) {
+	if _, err := os.Stat(dirArg); os.IsNotExist(err) {
 		log.Fatal(err.Error())
 	}
-	dir = *fdir
+	dir = dirArg
 }
 
 func main() {
