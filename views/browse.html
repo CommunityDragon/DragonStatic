@@ -1,0 +1,11 @@
+{{ define "content" }}
+    <div>
+        <h1>Hello World</h1>
+        {{range .directories }}
+            {{ . }}
+        {{end}}
+        {{range .files }}
+            {{ . }}
+        {{end}}
+    </div>
+{{ end }}

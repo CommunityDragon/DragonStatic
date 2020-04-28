@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html class="uk-background-muted" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ .title }}</title>
+    {{ include "layouts/head" }}
+    {{ template "head" . }}
+    {{ define "head" }}{{ end }}
+</head>
+<body>
+<div id="app">
+    {{ template "header" . }}
+    {{ define "header" }}{{ end }}
+
+    {{ template "content" . }}
+
+    {{ template "footer" . }}
+    {{ define "footer" }}{{ end }}
+</div>
+{{ template "scripts" . }}
+{{ define "scripts" }}{{ end }}
+</body>
+</html>
