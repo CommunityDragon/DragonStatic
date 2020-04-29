@@ -1,7 +1,6 @@
 package mw
 
 import (
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"net/url"
@@ -69,7 +68,6 @@ func BrowseDir(root string, ignore []string) echo.MiddlewareFunc {
 
 			dirGrid := false
 			if _, err := c.Cookie("cdragon_dir_grid"); err == nil {
-				fmt.Println("WOLLAH")
 				dirGrid = true
 			}
 
