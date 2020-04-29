@@ -1,0 +1,21 @@
+<div class="uk-child-width-1-4@m uk-grid-small uk-grid-match" uk-grid>
+    {{ range $file := .files }}
+        {{ $base := "/" }}
+        {{ if eq $.current.path "" }}
+            {{ $base = "" }}
+        {{ end }}
+        <div>
+            <a href="{{ $base }}{{ join $.current.path $file.name "/" }}" class="uk-link-reset">
+                <div class="uk-card uk-card-flat uk-card-small uk-card-hover uk-card-default uk-grid-collapse">
+                    <div class="uk-card-body" style="overflow: hidden; text-overflow: ellipsis">
+                        {{ if larger_than .name 24 }}
+                            <span uk-tooltip="title: {{ .name }}; pos: bottom-left">{{ .name }}</span>
+                        {{ else }}
+                            {{ .name }}
+                        {{ end }}
+                    </div>
+                </div>
+            </a>
+        </div>
+    {{ end }}
+</div>

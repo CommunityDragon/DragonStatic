@@ -9,13 +9,22 @@
 </head>
 <body>
 <div id="app">
-    {{ template "header" . }}
-    {{ define "header" }}{{ end }}
+    <div>
+        {{ template "header" . }}
+        {{ define "header" }}
+            {{ include "layouts/header" }}
+        {{ end }}
 
-    {{ template "content" . }}
+        <div class="uk-container">
+            {{ template "content" . }}
+        </div>
+        <br>
+    </div>
 
     {{ template "footer" . }}
-    {{ define "footer" }}{{ end }}
+    {{ define "footer" }}
+        {{ include "layouts/footer" }}
+    {{ end }}
 </div>
 {{ template "scripts" . }}
 {{ define "scripts" }}{{ end }}

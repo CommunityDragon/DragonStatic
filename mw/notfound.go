@@ -6,5 +6,5 @@ import (
 )
 
 func NotFound(c echo.Context) error {
-	return c.Render(http.StatusNotFound, "browse", nil)
+	return c.Render(http.StatusNotFound, "404", nil)
 }

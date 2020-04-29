@@ -1,0 +1,42 @@
+.uk-card-tiny .uk-card-body, .uk-card-tiny.uk-card-body {
+    padding: 12px 12px;
+}
+
+.uk-breadcrumb>:nth-child(n+2):not(.uk-first-column)::before {
+    margin: 0 10px;
+}
+
+*, *:before, *:after {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.uk-card.uk-card-flat {
+    box-shadow: none;
+}
+
+.uk-card.uk-card-flat:hover {
+    z-index: 1;
+}
+
+html, body {
+    height: 100%;
+}
+
+html, body, #app, #app > div:first-child {
+    min-height: 100%;
+}
+
+#app {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#app > div:first-child {
+    flex-grow: 1;
+}
+
+footer {
+    padding: 10px;
+}

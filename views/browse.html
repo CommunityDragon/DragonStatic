@@ -1,11 +1,76 @@
+{{ define "head" }}
+    <style>
+        .uk-tooltip {
+            max-width: none; !important;
+        }
+    </style>
+{{ end }}
+
 {{ define "content" }}
     <div>
-        <h1>Hello World</h1>
-        {{range .directories }}
-            {{ . }}
-        {{end}}
-        {{range .files }}
-            {{ . }}
-        {{end}}
+        <ul class="uk-breadcrumb">
+            {{ $path := "" }}
+            <li><a href="/">Home</a></li>
+            {{ if not (eq .current.path "") }}
+                {{ range split .current.path "/" }}
+                    {{ $path = join $path . "/" }}
+                    <li><a href="{{ $path }}">{{ . }}</a></li>
+                {{ end }}
+            {{ end }}
+        </ul>
+        {{ if not (empty .directories) }}
+            <div class="uk-flex uk-flex-between uk-flex-middle">
+                <h2 class="uk-heading-bullet"><span>Directories</span></h2>
+                <div>
+                    {{ if .current.settings.dir_grid }}
+                        <button onclick="clearSetting('dir_grid')" class="uk-margin-small-left uk-icon-link" uk-icon="icon: list; ratio: 1.25"></button>
+                    {{ else }}
+                        <button onclick="setSetting('dir_grid')" class="uk-margin-small-left uk-icon-link" uk-icon="icon: grid; ratio: 1.25"></button>
+                    {{ end }}
+                </div>
+            </div>
+            {{ if .current.settings.dir_grid }}
+                {{ include "layouts/browse/dir_grid" }}
+            {{ else }}
+                {{ include "layouts/browse/dir_list" }}
+            {{ end }}
+        {{ end }}
+
+        <br><br><br>
+
+        {{ if not (empty .files) }}
+            <div class="uk-flex uk-flex-between uk-flex-middle">
+                <h2 class="uk-heading-bullet"><span>Files</span></h2>
+                <div>
+                    {{ if .current.settings.file_list }}
+                        <button onclick="clearSetting('file_list')" class="uk-margin-small-left uk-icon-link" uk-icon="icon: grid; ratio: 1.25"></button>
+                    {{ else }}
+                        <button onclick="setSetting('file_list')" class="uk-margin-small-left uk-icon-link" uk-icon="icon: list; ratio: 1.25"></button>
+                    {{ end }}
+                </div>
+            </div>
+            {{ if .current.settings.file_list }}
+                {{ include "layouts/browse/file_list" }}
+            {{ else }}
+                {{ include "layouts/browse/file_grid" }}
+            {{ end }}
+        {{ end }}
+
+        <br><br><br>
     </div>
+{{ end }}
+
+
+{{ define "scripts" }}
+    <script>
+        function setSetting(name) {
+            document.cookie = 'cdragon_' + name + '=true; SameSite=None; expires=Fri, 31 Dec 9999 23:59:59 GMT';
+            location.reload();
+        }
+
+        function clearSetting(name) {
+            document.cookie = 'cdragon_' + name + '=true; SameSite=None; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+            location.reload();
+        }
+    </script>
 {{ end }}

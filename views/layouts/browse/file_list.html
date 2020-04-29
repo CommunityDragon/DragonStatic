@@ -1,0 +1,13 @@
+{{ range $file := .files }}
+    {{ $base := "/" }}
+    {{ if eq $.current.path "" }}
+        {{ $base = "" }}
+    {{ end }}
+    <a href="{{ $base }}{{ join $.current.path $file.name "/" }}" class="uk-link-reset">
+        <div class="uk-card uk-card-flat uk-card-tiny uk-card-hover uk-card-default uk-grid-collapse uk-margin-small">
+            <div class="uk-card-body">
+                <span class="uk-text-justify uk-margin-small-right" uk-icon="file"></span> {{ .name }}
+                <span class="uk-align-right uk-text-meta">{{ time .mod "15:04\t02/01/2006" }}</span></div>
+        </div>
+    </a>
+{{ end }}

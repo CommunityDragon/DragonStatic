@@ -1,6 +1,7 @@
 package mw
 
 import (
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"net/url"
@@ -10,7 +11,7 @@ import (
 	"strings"
 )
 
-func BrowseDir(root string) echo.MiddlewareFunc {
+func BrowseDir(root string, ignore []string) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) (err error) {
 			p := c.Request().URL.Path
@@ -34,22 +35,60 @@ func BrowseDir(root string) echo.MiddlewareFunc {
 				return next(c)
 			}
 
-			var directories, files []string
+			var directories, files []echo.Map
 			for _, item := range items {
 				if strings.HasPrefix(item.Name(), ".") {
 					continue
 				}
 
+				cont := false
+				for _, ext := range ignore {
+					if strings.HasSuffix(item.Name(), ext) {
+						cont = true
+						break
+					}
+				}
+				if cont {
+					continue
+				}
+
 				if item.IsDir() {
-					directories = append(directories, item.Name())
+					directories = append(directories, echo.Map{
+						"name": item.Name(),
+						"size": item.Size(),
+						"mod": item.ModTime(),
+					})
 				} else {
-					files = append(files, item.Name())
+					files = append(files, echo.Map{
+						"name": item.Name(),
+						"size": item.Size(),
+						"mod": item.ModTime(),
+					})
 				}
 			}
+
+			dirGrid := false
+			if _, err := c.Cookie("cdragon_dir_grid"); err == nil {
+				fmt.Println("WOLLAH")
+				dirGrid = true
+			}
+
+			fileList := false
+			if _, err := c.Cookie("cdragon_file_list"); err == nil {
+				fileList = true
+			}
+
 
 			return c.Render(http.StatusOK, "browse", echo.Map{
 				"directories": directories,
 				"files": files,
+				"current": echo.Map{
+					"path": p,
+					"settings": echo.Map{
+						"dir_grid": dirGrid,
+						"file_list": fileList,
+					},
+				},
 			})
 		}
 	}
