@@ -20,6 +20,26 @@
     z-index: 1;
 }
 
+.uk-navbar .uk-search-default .uk-search-input {
+    border: none;
+}
+
+.uk-navbar .uk-search-default .uk-search-input::placeholder {
+    text-transform: uppercase;
+}
+
+.uk-navbar-item, .uk-navbar-nav>li>a.no-min-height {
+    min-height: auto !important;
+}
+
+.uk-navbar-dropdown-width-3.uk-navbar-dropdown-width-3-extended {
+    width: 620px;
+}
+
+.uk-navbar-dropdown-grid.uk-navbar-dropdown-grid-separator-hidden > *::before {
+    border-left: none !important;
+}
+
 html, body {
     height: 100%;
 }
